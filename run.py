@@ -23,14 +23,13 @@ def register(name, device_type, webhook_url):
 def unregister(name, device_type, webhook_url):
 	data = {
 		'name': name,
-		'type': device_type,
 	}
 	response = requests.post("http://localhost:8000/unregister", data)
 	if response.status_code != 200:
 		raise Exception("SERVER_ERROR")
 	json_data = json.loads(response.text)
 	if str(json_data['status']) == '1':
-		print('Device register successfully!')
+		print('Device unregister successfully!')
 	else:
 		print('Device failed to register!')
 		print(json_data)

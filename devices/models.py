@@ -1,6 +1,6 @@
 from django.db import models
 from .global_func import calculate_time_to_arrive
-import os
+from datetime import datetime
 
 TYPE_CHOICES = (
 	('a/c', 'Air Conditioner'),
@@ -37,6 +37,7 @@ def water_heater_logic(state, signal):
 	if signal == "COLD":
 		if calculate_time_to_arrive():
 			state["switch"] = True
+			state["switch_on_time"] = str(datetime.now())
 			print("Turn on water heater for 25 minutes")
 
 	return state
@@ -63,9 +64,8 @@ class Device(models.Model):
 			elif self.type == "switch":
 				self.state = {"light": False, "last_signal": "Normal"}
 			elif self.type == "water_heater":
-				self.state = {"switch": False, "last_signal": "Normal"}
+				self.state = {"switch": False, "last_signal": "Normal", "switch_on_time": str(datetime.now())}
 
-		os.environ["last_signal"] = ""
 		super(Device, self).save(*args, **kwargs)
 
 

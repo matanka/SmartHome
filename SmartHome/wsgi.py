@@ -15,4 +15,3 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SmartHome.settings')
 
 application = get_wsgi_application()
 
-os.environ.setdefault('last_signal', "")
